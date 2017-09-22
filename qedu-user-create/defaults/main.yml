@@ -1,0 +1,11 @@
+---
+# defaults file for qedu-user-create
+ users_group: root
+
+ list:
+  - username: teste
+    type: root
+    state: present
+  - username: talita
+    type: root
+    state: present
