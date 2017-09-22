@@ -19,6 +19,7 @@
 
 - name: Linux | Set content for authorized_keys
   copy:
-    content: "/home/talitabp/.ssh/{{item.username}}.pub"
+    content: "/home/talitabp/.ssh/'{{ item.username }}'.pub"
     dest: "/home/talitabp/.ssh/authorized_keys"
+  with_items: "{{ list }}"
   ignore_errors: yes
