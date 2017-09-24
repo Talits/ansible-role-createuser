@@ -7,7 +7,7 @@
     state: "{{ item.state | default('present') }}"
     generate_ssh_key: yes
     ssh_key_bits: 2048
-    ssh_key_file: /home/talitabp/.ssh/{{item.username}}
+    ssh_key_file: /home/{{ ansible_env.HOME }} /.ssh/{{item.username}}
   with_items: "{{ list }}"
 
 - name: Linux | Create authorized_keys
@@ -18,8 +18,8 @@
 
 
 - name: Linux | Set content for authorized_keys
-  copy:
-    content: "/home/talitabp/.ssh/'{{ item.username }}'.pub"
-    dest: "/home/talitabp/.ssh/authorized_keys"
+  command: " cat /{{ ansible_env.HOME }}/.ssh/{{item.username}}.pub >> /{{ ansible_env.HOME }}/.ssh/authorized_keys"
   with_items: "{{ list }}"
   ignore_errors: yes
+
+ 
