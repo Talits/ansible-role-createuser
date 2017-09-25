@@ -1,4 +1,3 @@
----
 # tasks file for qedu-user-create
 - name: Linux | Create User
   user:
@@ -7,7 +6,7 @@
     state: "{{ item.state | default('present') }}"
     generate_ssh_key: yes
     ssh_key_bits: 2048
-    ssh_key_file: /home/{{ ansible_env.HOME }} /.ssh/{{item.username}}
+    ssh_key_file: /root/.ssh/{{item.username}}
   with_items: "{{ list }}"
 
 - name: Linux | Create authorized_keys
@@ -16,10 +15,7 @@
     state: touch
     mode: "u=rw,g=r,o=r"
 
-
 - name: Linux | Set content for authorized_keys
-  command: " cat /{{ ansible_env.HOME }}/.ssh/{{item.username}}.pub >> /{{ ansible_env.HOME }}/.ssh/authorized_keys"
+  shell: "cat  /root/.ssh/'{{item.username}}'.pub >> /home/talitabp/.ssh/authorized_keys"
   with_items: "{{ list }}"
   ignore_errors: yes
-
- 
