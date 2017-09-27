@@ -1,11 +1,16 @@
 ---
 # defaults file for qedu-user-create
- users_group: root
-
+ #users_group: root
+ path: ubuntu
  list:
   - username: teste
-    type: root
+    type: ubuntu
     state: present
+
   - username: talita
-    type: root
+    type: ubuntu
+    state: present
+
+  - username: b
+    type: b
     state: present

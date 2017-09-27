@@ -1,0 +1,39 @@
+# tasks file for qedu-user-create
+
+- name: Linux | Create User
+  user:
+    system: yes
+    name: "{{ item.username }}"
+    comment: "{{ item.username }}"
+    state: "{{ item.state | default('present') }}"
+    generate_ssh_key: yes
+    ssh_key_bits: 2048
+    shell: /bin/bash
+    ssh_key_file:  "/home/{{item.username}}/.ssh/{{item.username}}.pem"
+  with_items: "{{ list }}"
+
+- name: Linux | Add user in sudoers
+  lineinfile:
+    dest: /etc/sudoers
+    state: present
+    line: '{{item.username}} ALL=(ALL) NOPASSWD: ALL'
+  with_items: "{{ list }}"
+  
+
+- name: Linux | Set content for authorized_keys
+  shell: "cat  /home/{{item.username}}/.ssh/{{item.username}}.pem.pub >> /home/{{item.username}}/.ssh/authorized_keys"
+  with_items: "{{ list }}"
+
+- name: Linux | Copy key for the local machine
+  fetch:
+    src:  "/home/{{item.username}}/.ssh/{{item.username}}.pem"
+    dest: /tmp/ssh/
+    validate_checksum: yes
+    flat: yes
+  with_items: "{{ list }}"
+
+- name: Linux | Clean key path
+  file:
+    state: absent
+    path: "/home/{{item.username}}/.ssh/{{item.username}}.pem"
+  with_items: "{{ list }}"
