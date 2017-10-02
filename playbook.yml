@@ -1,9 +1,3 @@
-- hosts: all
+- hosts: localhost
   become: true
-  gather_facts: False
-  pre_tasks:
-    - name: "Python Dependencies" 
-      raw: bash -c "test -e /usr/bin/python || (apt -qqy update && apt install -qqy python-minimal)"
-      register: output
-      changed_when: output.stdout != ""
-
+  
