@@ -6,5 +6,4 @@
       raw: bash -c "test -e /usr/bin/python || (apt -qqy update && apt install -qqy python-minimal)"
       register: output
       changed_when: output.stdout != ""
-  roles:
-    - ansible-role-createuser
+
