@@ -1,4 +1,4 @@
-# tasks file for qedu-user-create
+# tasks file for user-create
 
 - name: Linux | Create User
   user:
